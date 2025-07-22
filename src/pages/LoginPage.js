@@ -7,7 +7,7 @@ const LoginPage = () => {
   const [message, setMessage] = useState('');
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
-
+  const backendURL =  process.env.REACT_APP_API_URL;
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async e => {
@@ -15,7 +15,7 @@ const LoginPage = () => {
     setMessage('');
     setSuccess(false);
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', form);
+      const res = await axios.post(`${backendURL}/api/auth/login`, form);
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(res.data.user)); // Save user info
       window.dispatchEvent(new Event('storage'));

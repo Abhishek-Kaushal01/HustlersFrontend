@@ -5,6 +5,7 @@ const RegisterPage = () => {
   const [form, setForm] = useState({ name: '', email: '', password: '' });
   const [message, setMessage] = useState('');
   const [success, setSuccess] = useState(false);
+  const backendURL =  process.env.REACT_APP_API_URL;
 
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -13,7 +14,7 @@ const RegisterPage = () => {
     setMessage('');
     setSuccess(false);
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/register', form);
+      const res = await axios.post(`${backendURL}/api/auth/register`, form);
       localStorage.setItem('token', res.data.token);
       setMessage('Registration successful!');
       setSuccess(true);

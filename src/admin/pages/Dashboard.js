@@ -5,6 +5,7 @@ export default function Dashboard() {
   const [stats, setStats] = useState({ totalUsers: '--', totalRooms: '--', totalBookings: '--' });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+   const backendURL =  process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -12,7 +13,7 @@ export default function Dashboard() {
       setError('');
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('http://localhost:5000/api/admin/dashboard', {
+        const res = await axios.get(`${backendURL}/api/admin/dashboard`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setStats(res.data);

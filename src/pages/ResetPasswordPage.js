@@ -7,13 +7,13 @@ const ResetPasswordPage = () => {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [success, setSuccess] = useState(false);
-
+  const backendURL =  process.env.REACT_APP_API_URL;
   const handleSubmit = async e => {
     e.preventDefault();
     setMessage('');
     setSuccess(false);
     try {
-      await axios.post(`http://localhost:5000/api/auth/reset-password/${token}`, { password });
+      await axios.post(`${backendURL}/api/auth/reset-password/${token}`, { password });
       setMessage('Password reset successful!');
       setSuccess(true);
     } catch (err) {

@@ -14,6 +14,7 @@ export default function Contact() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+  const backendURL =  process.env.REACT_APP_API_URL;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -27,7 +28,7 @@ export default function Contact() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/contact",
+        `${backendURL}/api/contact`,
         formData
       );
 

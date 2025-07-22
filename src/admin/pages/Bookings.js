@@ -6,13 +6,14 @@ export default function Bookings() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [actionMsg, setActionMsg] = useState('');
+  const backendURL =  process.env.REACT_APP_API_URL;
 
   const fetchBookings = async () => {
     setLoading(true);
     setError('');
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/admin/bookings', {
+      const res = await axios.get(`${backendURL}/api/admin/bookings`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setBookings(res.data);
@@ -31,7 +32,7 @@ export default function Bookings() {
     setActionMsg('');
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5000/api/admin/bookings/${id}`, { status: newStatus }, {
+      await axios.put(`http://${backendURL}/api/admin/bookings/${id}`, { status: newStatus }, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setActionMsg('Booking status updated');

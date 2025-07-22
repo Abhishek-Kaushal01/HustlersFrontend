@@ -5,13 +5,14 @@ const ForgotPasswordPage = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [success, setSuccess] = useState(false);
+  const backendURL =  process.env.REACT_APP_API_URL;
 
   const handleSubmit = async e => {
     e.preventDefault();
     setMessage('');
     setSuccess(false);
     try {
-      await axios.post('http://localhost:5000/api/auth/forgot-password', { email });
+      await axios.post(`${backendURL}/api/auth/forgot-password`, { email });
       setMessage('Reset link sent to your email.');
       setSuccess(true);
     } catch (err) {

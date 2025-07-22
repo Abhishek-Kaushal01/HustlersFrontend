@@ -18,13 +18,14 @@ export default function Rooms() {
   const [modalMode, setModalMode] = useState('add'); // 'add' or 'edit'
   const [roomForm, setRoomForm] = useState(initialRoom);
   const [editId, setEditId] = useState(null);
+  const backendURL =  process.env.REACT_APP_API_URL;
 
   const fetchRooms = async () => {
     setLoading(true);
     setError('');
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/admin/rooms', {
+      const res = await axios.get(`${backendURL}/api/admin/rooms`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setRooms(res.data);
@@ -43,7 +44,7 @@ export default function Rooms() {
     setActionMsg('');
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/admin/rooms/${id}`, {
+      await axios.delete(`${backendURL}/api/admin/rooms/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setActionMsg('Room deleted');
@@ -95,12 +96,12 @@ export default function Rooms() {
         amenities: roomForm.amenities.split(',').map(a => a.trim()).filter(Boolean),
       };
       if (modalMode === 'add') {
-        await axios.post('http://localhost:5000/api/admin/rooms', payload, {
+        await axios.post(`${backendURL}/api/admin/rooms`, payload, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setActionMsg('Room added');
       } else {
-        await axios.put(`http://localhost:5000/api/admin/rooms/${editId}`, payload, {
+        await axios.put(`${backendURL}/api/admin/rooms/${editId}`, payload, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setActionMsg('Room updated');

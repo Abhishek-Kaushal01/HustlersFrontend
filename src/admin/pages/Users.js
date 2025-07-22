@@ -6,13 +6,14 @@ export default function Users() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [actionMsg, setActionMsg] = useState('');
+  const backendURL =  process.env.REACT_APP_API_URL;
 
   const fetchUsers = async () => {
     setLoading(true);
     setError('');
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/admin/users', {
+      const res = await axios.get(`${backendURL}/api/admin/users`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUsers(res.data);
@@ -31,7 +32,7 @@ export default function Users() {
     setActionMsg('');
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5000/api/admin/users/${id}/promote`, {}, {
+      await axios.put(`${backendURL}/api/admin/users/${id}/promote`, {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setActionMsg('User promoted to admin');
@@ -45,7 +46,7 @@ export default function Users() {
     setActionMsg('');
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/admin/users/${id}`, {
+      await axios.delete(`${backendURL}/api/admin/users/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setActionMsg('User deleted');

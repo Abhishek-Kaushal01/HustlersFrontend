@@ -5,6 +5,7 @@ const ChangePasswordPage = () => {
   const [form, setForm] = useState({ oldPassword: '', newPassword: '' });
   const [message, setMessage] = useState('');
   const [success, setSuccess] = useState(false);
+  const backendURL =  process.env.REACT_APP_API_URL;
 
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -14,7 +15,7 @@ const ChangePasswordPage = () => {
     setSuccess(false);
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5000/api/auth/change-password', form, {
+      await axios.post(`${backendURL}/api/auth/change-password`, form, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setMessage('Password changed successfully!');
